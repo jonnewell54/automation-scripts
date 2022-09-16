@@ -90,7 +90,7 @@ def getorglist(p_apikey):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 01: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -116,7 +116,7 @@ def getnwlist(p_apikey, p_shardhost, p_orgid):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 03: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -134,7 +134,7 @@ def getdevicelist(p_apikey, p_shardhost, p_nwid):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/networks/%s/devices' % (p_shardhost, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/networks/%s/devices' % (p_shardhost, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 04: Unable to contact Meraki cloud')
         sys.exit(2)

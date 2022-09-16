@@ -46,7 +46,7 @@ def printhelp():
 
 
 def list_networks(api_key, org_id):
-    url = 'https://dashboard.meraki.com/api/v0/organizations/{}/networks'.format(org_id)
+    url = 'https://dashboard.meraki.com/api/v1/organizations/{}/networks'.format(org_id)
     try:
         response = requests.get(url=url, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)
@@ -54,7 +54,7 @@ def list_networks(api_key, org_id):
         print('Error calling list_networks: {}'.format(e))
 
 def get_inventory(api_key, org_id):
-    url = 'https://dashboard.meraki.com/api/v0/organizations/{}/inventory'.format(org_id)
+    url = 'https://dashboard.meraki.com/api/v1/organizations/{}/inventory'.format(org_id)
     try:
         response = requests.get(url=url, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)
@@ -62,7 +62,7 @@ def get_inventory(api_key, org_id):
         print('Error calling get_inventory: {}'.format(e))
 
 def list_switch_ports(api_key, serial):
-    url = 'https://dashboard.meraki.com/api/v0/devices/{}/switchPorts'.format(serial)
+    url = 'https://dashboard.meraki.com/api/v1/devices/{}/switchPorts'.format(serial)
     try:
         response = requests.get(url=url, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)
@@ -70,7 +70,7 @@ def list_switch_ports(api_key, serial):
         print('Error calling list_switch_ports with serial number {}: {}'.format(serial, e))
 
 def get_port_details(api_key, serial, number):
-    url = 'https://dashboard.meraki.com/api/v0/devices/{}/switchPorts/{}'.format(serial, number)
+    url = 'https://dashboard.meraki.com/api/v1/devices/{}/switchPorts/{}'.format(serial, number)
     try:
         response = requests.get(url=url, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)
@@ -78,7 +78,7 @@ def get_port_details(api_key, serial, number):
         print('Error calling get_port_details with serial {} and port {}: {}'.format(serial, number, e))
 
 def update_switch_port(api_key, serial, number, data):
-    url = 'https://dashboard.meraki.com/api/v0/devices/{}/switchPorts/{}'.format(serial, number)
+    url = 'https://dashboard.meraki.com/api/v1/devices/{}/switchPorts/{}'.format(serial, number)
     try:
         response = requests.put(url=url, data=data, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)
@@ -86,7 +86,7 @@ def update_switch_port(api_key, serial, number, data):
         print('Error calling update_switch_port with serial {}, port {}, and data {}: {}'.format(serial, number, data, e))
 
 def list_clients(api_key, serial, timestamp=86400): # timestamp in seconds
-    url = 'https://dashboard.meraki.com/api/v0/devices/{}/clients?timespan={}'.format(serial, timestamp)
+    url = 'https://dashboard.meraki.com/api/v1/devices/{}/clients?timespan={}'.format(serial, timestamp)
     try:
         response = requests.get(url=url, headers={'X-Cisco-Meraki-API-Key': api_key, 'Content-Type': 'application/json'})
         return json.loads(response.text)

@@ -57,7 +57,7 @@ def getorgid(p_apikey, p_orgname):
     #looks up org id for a specific org name
     #on failure returns 'null'
     try:
-        r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 00: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -81,7 +81,7 @@ def getnwid(p_apikey, p_shardurl, p_orgid, p_nwname):
     #on failure returns 'null'
 
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 02: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -112,7 +112,7 @@ def createnw(p_apikey, p_shardurl, p_dstorg, p_nwdata):
         nwtype = p_nwdata['type']
     if nwtype != 'systems manager':
         try:
-            r = requests.post('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+            r = requests.post('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
         except:
             printusertext('ERROR 03: Unable to contact Meraki cloud')
             sys.exit(2)
@@ -127,7 +127,7 @@ def updatenw(p_apikey, p_shardhost, p_nwid, p_field, p_value):
         
     #time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.put('https://%s/api/v0/networks/%s' % (p_shardhost, p_nwid), data=json.dumps({p_field: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.put('https://%s/api/v1/networks/%s' % (p_shardhost, p_nwid), data=json.dumps({p_field: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 21: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -142,7 +142,7 @@ def gettemplateid(p_apikey, p_shardurl, p_orgid, p_tname):
     #on failure returns 'null'
 
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/configTemplates' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/configTemplates' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 04: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -166,7 +166,7 @@ def bindnw(p_apikey, p_shardurl, p_nwid, p_templateid, p_autobind):
         autobindvalue = 'false'
     
     try:
-        r = requests.post('https://%s/api/v0/networks/%s/bind' % (p_shardurl, p_nwid), data=json.dumps({'configTemplateId': p_templateid, 'autoBind': autobindvalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/networks/%s/bind' % (p_shardurl, p_nwid), data=json.dumps({'configTemplateId': p_templateid, 'autoBind': autobindvalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 05: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -180,7 +180,7 @@ def claimdeviceorg(p_apikey, p_shardurl, p_orgid, p_devserial):
     #claims a device into an org without adding to a network
     
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 06: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -191,7 +191,7 @@ def claimlicenseorg(p_apikey, p_shardurl, p_orgid, p_licensekey):
     #claims a license key into an org
     
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'licenseKey': p_licensekey, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'licenseKey': p_licensekey, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 07: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -202,7 +202,7 @@ def claimdevice(p_apikey, p_shardurl, p_nwid, p_devserial):
 	#claims a device into a network
 	
     try:
-        r = requests.post('https://%s/api/v0/networks/%s/devices/claim' % (p_shardurl, p_nwid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/networks/%s/devices/claim' % (p_shardurl, p_nwid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 08: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -214,7 +214,7 @@ def getdeviceinfo(p_apikey, p_shardurl, p_nwid, p_serial):
     #on failure returns lone device record, with serial number 'null'
 
     try:
-        r = requests.get('https://%s/api/v0/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 09: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -238,7 +238,7 @@ def setdevicedata(p_apikey, p_shardurl, p_nwid, p_devserial, p_field, p_value, p
         movevalue = "true"
     
     try:
-        r = requests.put('https://%s/api/v0/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_devserial), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.put('https://%s/api/v1/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_devserial), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 10: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -252,7 +252,7 @@ def getorgdeviceinfo (p_apikey, p_shardurl, p_orgid, p_devserial):
     #gets basic device info from org inventory. device does not need to be part of a network
     
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/inventory' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/inventory' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 11: Unable to contact Meraki cloud')
         sys.exit(2)

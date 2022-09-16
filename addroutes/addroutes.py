@@ -110,7 +110,7 @@ def getOrgId(p_apiKey, p_orgName):
         
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://api.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         return(None)
     
@@ -129,7 +129,7 @@ def getOrgId(p_apiKey, p_orgName):
 def getNetId(p_apiKey, p_orgId, p_shard, p_netName):
     merakiRequestThrottler()
     
-    requestUrl = "https://%s/api/v0/organizations/%s/networks" % (p_shard, p_orgId)
+    requestUrl = "https://%s/api/v1/organizations/%s/networks" % (p_shard, p_orgId)
     
     try:
         r = requests.get(requestUrl, headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
@@ -157,7 +157,7 @@ def addRoute(p_apiKey, p_shard, p_netId, p_routeData):
 
     merakiRequestThrottler()
     
-    requestUrl = "https://%s/api/v0/networks/%s/staticRoutes" % (p_shard, p_netId)
+    requestUrl = "https://%s/api/v1/networks/%s/staticRoutes" % (p_shard, p_netId)
     
     if True:
         r = requests.post(requestUrl, data=json.dumps(p_routeData), headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )

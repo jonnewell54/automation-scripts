@@ -369,7 +369,7 @@ def getorgid(p_apikey, p_orgname):
     #looks up org id for a specific org name
     #on failure returns 'null'
     
-    r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     
     if r.status_code != requests.codes.ok:
         return 'null'
@@ -389,7 +389,7 @@ def getnwid(p_apikey, p_shardurl, p_orgid, p_nwname):
     #looks up network id for a network name
     #on failure returns 'null'
 
-    r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     
     if r.status_code != requests.codes.ok:
         return 'null'
@@ -418,7 +418,7 @@ def createnw(p_apikey, p_shardurl, p_dstorg, p_nwdata):
     else:
         nwtype = p_nwdata['type']
     if nwtype != 'systems manager':
-        r = requests.post('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     else:
         printusertext('WARNING: Skipping network "%s" (Cannot create SM networks)' % p_nwdata['name'])
         return('null')
@@ -428,21 +428,21 @@ def createnw(p_apikey, p_shardurl, p_dstorg, p_nwdata):
 def claimdevice(p_apikey, p_shardurl, p_nwid, p_devserial):
     #claims a device into an org
     
-    r = requests.post('https://%s/api/v0/networks/%s/devices/claim' % (p_shardurl, p_nwid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.post('https://%s/api/v1/networks/%s/devices/claim' % (p_shardurl, p_nwid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     
     return(0)
     
 def claimdeviceorg(p_apikey, p_shardurl, p_orgid, p_devserial):
     #claims a device into an org without adding to a network
     
-    r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardurl, p_orgid), data=json.dumps({'serial': p_devserial}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     
     return(0)
     
 def getorgdeviceinfo (p_apikey, p_shardurl, p_orgid, p_devserial):
     #gets basic device info from org inventory. device does not need to be part of a network
     
-    r = requests.get('https://%s/api/v0/organizations/%s/inventory' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.get('https://%s/api/v1/organizations/%s/inventory' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     
     returnvalue = {}
     if r.status_code != requests.codes.ok:
@@ -470,7 +470,7 @@ def setswportconfig(p_apikey, p_shardurl, p_devserial, p_portnum, p_portcfg):
         if value != '':
             validconfig[key] = value
                       
-    r = requests.put('https://%s/api/v0/devices/%s/switchPorts/%s' % (p_shardurl, p_devserial, p_portnum), data=json.dumps(validconfig), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.put('https://%s/api/v1/devices/%s/switchPorts/%s' % (p_shardurl, p_devserial, p_portnum), data=json.dumps(validconfig), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
                 
     return (0)
     
@@ -483,7 +483,7 @@ def setdevicedata(p_apikey, p_shardurl, p_nwid, p_devserial, p_field, p_value, p
     if p_movemarker:
         movevalue = "true"
     
-    r = requests.put('https://%s/api/v0/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_devserial), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+    r = requests.put('https://%s/api/v1/networks/%s/devices/%s' % (p_shardurl, p_nwid, p_devserial), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
             
     if r.status_code != requests.codes.ok:
         return ('null')

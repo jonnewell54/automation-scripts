@@ -70,7 +70,7 @@ def getorgid(p_apikey, p_orgname):
 	#looks up org id for a specific org name
 	#on failure returns 'null'
 	
-	r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	if r.status_code != requests.codes.ok:
 		return 'null'
@@ -90,7 +90,7 @@ def getnwlist(p_apikey, p_shardurl, p_orgid):
 	#returns a list of all networks in an organization
 	#on failure returns a single record with 'null' name and id
 	
-	r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	returnvalue = []
 	if r.status_code != requests.codes.ok:
@@ -102,7 +102,7 @@ def getnwlist(p_apikey, p_shardurl, p_orgid):
 def getdevicelist(p_apikey, p_shardurl, p_nwid):
 	#returns a list of all devices in a network
 	
-	r = requests.get('https://%s/api/v0/networks/%s/devices' % (p_shardurl, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/networks/%s/devices' % (p_shardurl, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 		
 	returnvalue = []
 	if r.status_code != requests.codes.ok:
@@ -115,7 +115,7 @@ def getnwid(p_apikey, p_shardurl, p_orgid, p_nwname):
 	#looks up network id for a network name
 	#on failure returns 'null'
 
-	r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	if r.status_code != requests.codes.ok:
 		return 'null'
@@ -130,7 +130,7 @@ def getnwid(p_apikey, p_shardurl, p_orgid, p_nwname):
 def getswitchports(p_apikey, p_shardurl, p_devserial):
 	#returns switchport info for a device
 	
-	r = requests.get('https://%s/api/v0/devices/%s/switchPorts' % (p_shardurl, p_devserial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/devices/%s/switchPorts' % (p_shardurl, p_devserial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 		
 	returnvalue = []
 	if r.status_code != requests.codes.ok:
@@ -142,7 +142,7 @@ def getswitchports(p_apikey, p_shardurl, p_devserial):
 def setswportconfig(p_apikey, p_shardurl, p_devserial, p_portnum, p_portcfg):
 	#sets switchport configuration to match table given as parameter
 	
-	r = requests.put('https://%s/api/v0/devices/%s/switchPorts/%s' % (p_shardurl, p_devserial, p_portnum), data=json.dumps({'isolationEnabled': p_portcfg['isolationEnabled'], 'rstpEnabled': p_portcfg['rstpEnabled'], 'enabled': p_portcfg['enabled'], 'stpGuard': p_portcfg['stpGuard'], 'accessPolicyNumber': p_portcfg['accessPolicyNumber'], 'type': p_portcfg['type'], 'allowedVlans': p_portcfg['allowedVlans'], 'poeEnabled': p_portcfg['poeEnabled'], 'name': p_portcfg['name'], 'tags': p_portcfg['tags'], 'number': p_portcfg['number'], 'vlan': p_portcfg['vlan'], 'voiceVlan': p_portcfg['voiceVlan']}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.put('https://%s/api/v1/devices/%s/switchPorts/%s' % (p_shardurl, p_devserial, p_portnum), data=json.dumps({'isolationEnabled': p_portcfg['isolationEnabled'], 'rstpEnabled': p_portcfg['rstpEnabled'], 'enabled': p_portcfg['enabled'], 'stpGuard': p_portcfg['stpGuard'], 'accessPolicyNumber': p_portcfg['accessPolicyNumber'], 'type': p_portcfg['type'], 'allowedVlans': p_portcfg['allowedVlans'], 'poeEnabled': p_portcfg['poeEnabled'], 'name': p_portcfg['name'], 'tags': p_portcfg['tags'], 'number': p_portcfg['number'], 'vlan': p_portcfg['vlan'], 'voiceVlan': p_portcfg['voiceVlan']}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	return (0)
 		

@@ -68,7 +68,7 @@ def getorglist(p_apikey):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         print('ERROR 01: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -93,7 +93,7 @@ def getlicensestate(p_apikey, p_shardhost, p_orgid):
         
     merakirequestthrottler()
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/licenseState' % (p_shardhost, p_orgid) , headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.get('https://%s/api/v1/organizations/%s/licenseState' % (p_shardhost, p_orgid) , headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         print('ERROR 03: Unable to contact Meraki cloud')
         sys.exit(2)

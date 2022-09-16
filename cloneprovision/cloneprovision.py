@@ -169,7 +169,7 @@ def getOrgId(p_apiKey, p_orgName):
         
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://api.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         return None
     
@@ -194,7 +194,7 @@ def getNetId(p_apiKey, p_orgId, p_shard, p_netName):
 
     merakiRequestThrottler()
     
-    requestUrl = "https://%s/api/v0/organizations/%s/networks" % (p_shard, p_orgId)
+    requestUrl = "https://%s/api/v1/organizations/%s/networks" % (p_shard, p_orgId)
     
     try:
         r = requests.get(requestUrl, headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
@@ -221,7 +221,7 @@ def createNet(p_apikey, p_orgid, p_shardurl, p_name, p_basenetid):
     payload = json.dumps({'name':p_name, 'type':'appliance', 'tags':'cloneprovision-py', 'copyFromNetworkId': p_basenetid})
         
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), data=payload, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.post('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), data=payload, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         return None
     
@@ -238,7 +238,7 @@ def claimDevice(p_apiKey, p_shard, p_netId, p_deviceSerial):
     merakiRequestThrottler()
     
     try:
-        r = requests.post('https://%s/api/v0/networks/%s/devices/claim' % (p_shard, p_netId), data=json.dumps({'serial': p_deviceSerial}), headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.post('https://%s/api/v1/networks/%s/devices/claim' % (p_shard, p_netId), data=json.dumps({'serial': p_deviceSerial}), headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         return None
         
@@ -256,7 +256,7 @@ def updateVlan(p_apiKey, p_shard, p_netId, p_vlanId, p_vlanSubnet, p_mxIp):
     payload = json.dumps({'applianceIp': p_mxIp, 'subnet': p_vlanSubnet})    
     
     try:
-        r = requests.put('https://%s/api/v0/networks/%s/vlans/%s' % (p_shard, p_netId, p_vlanId), data=payload, headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.put('https://%s/api/v1/networks/%s/vlans/%s' % (p_shard, p_netId, p_vlanId), data=payload, headers={'X-Cisco-Meraki-API-Key': p_apiKey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         return None        
     

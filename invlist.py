@@ -35,7 +35,7 @@ def getorgid(p_apikey, p_orgname):
 	#looks up org id for a specific org name
 	#on failure returns 'null'
 	
-	r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	if r.status_code != requests.codes.ok:
 		return 'null'
@@ -55,7 +55,7 @@ def getnwlist(p_apikey, p_shardurl, p_orgid):
 	#returns a list of all networks in an organization
 	#on failure returns a single record with 'null' name and id
 	
-	r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardurl, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 	
 	returnvalue = []
 	if r.status_code != requests.codes.ok:
@@ -67,7 +67,7 @@ def getnwlist(p_apikey, p_shardurl, p_orgid):
 def getdevicelist(p_apikey, p_shardurl, p_nwid):
 	#returns a list of all devices in a network
 	
-	r = requests.get('https://%s/api/v0/networks/%s/devices' % (p_shardurl, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+	r = requests.get('https://%s/api/v1/networks/%s/devices' % (p_shardurl, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
 		
 	returnvalue = []
 	if r.status_code != requests.codes.ok:

@@ -30,7 +30,7 @@ import requests
 import sys
 from meraki import meraki
 
-base_url = 'https://api.meraki.com/api/v0/'
+base_url = 'https://api.meraki.com/api/v1/'
 
 logger = logging.getLogger(__name__)
 def configure_logging():

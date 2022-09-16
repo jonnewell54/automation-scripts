@@ -81,7 +81,7 @@ def getorgid(p_apikey, p_orgname):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://dashboard.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://dashboard.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 01: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -106,7 +106,7 @@ def getnwid(p_apikey, p_shardhost, p_orgid, p_nwname):
 
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 03: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -138,7 +138,7 @@ def createnw(p_apikey, p_shardhost, p_dstorg, p_nwdata):
     if nwtype != 'systems manager':
         time.sleep(API_EXEC_DELAY)
         try:
-            r = requests.post('https://%s/api/v0/organizations/%s/networks' % (p_shardhost, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+            r = requests.post('https://%s/api/v1/organizations/%s/networks' % (p_shardhost, p_dstorg), data=json.dumps({'timeZone': p_nwdata['timeZone'], 'tags': p_nwdata['tags'], 'name': p_nwdata['name'], 'organizationId': p_dstorg, 'type': nwtype}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
         except:
             printusertext('ERROR 04: Unable to contact Meraki cloud')
             sys.exit(2)
@@ -153,7 +153,7 @@ def updatenw(p_apikey, p_shardhost, p_nwid, p_field, p_value):
         
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.put('https://%s/api/v0/networks/%s' % (p_shardhost, p_nwid), data=json.dumps({p_field: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.put('https://%s/api/v1/networks/%s' % (p_shardhost, p_nwid), data=json.dumps({p_field: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 05: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -169,7 +169,7 @@ def gettemplateid(p_apikey, p_shardhost, p_orgid, p_tname):
 
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/configTemplates' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/configTemplates' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 06: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -189,7 +189,7 @@ def getrandomtemplateid(p_apikey, p_shardhost, p_orgid):
         
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/configTemplates' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/configTemplates' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 07: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -209,7 +209,7 @@ def getnwssids(p_apikey, p_shardhost, p_nwid):
         
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/networks/%s/ssids' % (p_shardhost, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/networks/%s/ssids' % (p_shardhost, p_nwid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 08: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -228,7 +228,7 @@ def updatessidname(p_apikey, p_shardhost, p_nwid, p_ssidnumber, p_name):
         
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.put('https://%s/api/v0/networks/%s/ssids/%d' % (p_shardhost, p_nwid, p_ssidnumber), data=json.dumps({'name':p_name}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.put('https://%s/api/v1/networks/%s/ssids/%d' % (p_shardhost, p_nwid, p_ssidnumber), data=json.dumps({'name':p_name}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 09: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -248,7 +248,7 @@ def bindnw(p_apikey, p_shardhost, p_nwid, p_templateid, p_autobind):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/networks/%s/bind' % (p_shardhost, p_nwid), data=json.dumps({'configTemplateId': p_templateid, 'autoBind': autobindvalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/networks/%s/bind' % (p_shardhost, p_nwid), data=json.dumps({'configTemplateId': p_templateid, 'autoBind': autobindvalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 10: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -263,7 +263,7 @@ def claimdeviceorg(p_apikey, p_shardhost, p_orgid, p_device):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'serial': p_device}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'serial': p_device}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 11: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -275,7 +275,7 @@ def claimlicenseorg(p_apikey, p_shardhost, p_orgid, p_licensekey):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'licenseKey': p_licensekey, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'licenseKey': p_licensekey, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 12: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -287,7 +287,7 @@ def claimorderorg(p_apikey, p_shardhost, p_orgid, p_ordernum):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'order': p_ordernum, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/claim' % (p_shardhost, p_orgid), data=json.dumps({'order': p_ordernum, 'licenseMode': 'addDevices'}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 13: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -299,7 +299,7 @@ def claimdevice(p_apikey, p_shardhost, p_nwid, p_device):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/networks/%s/devices/claim' % (p_shardhost, p_nwid), data=json.dumps({'serial': p_device}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/networks/%s/devices/claim' % (p_shardhost, p_nwid), data=json.dumps({'serial': p_device}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 14: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -312,7 +312,7 @@ def getdeviceinfo(p_apikey, p_shardhost, p_nwid, p_serial):
 
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/networks/%s/devices/%s' % (p_shardhost, p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/networks/%s/devices/%s' % (p_shardhost, p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 15: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -337,7 +337,7 @@ def setdevicedata(p_apikey, p_shardhost, p_nwid, p_device, p_field, p_value, p_m
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.put('https://%s/api/v0/networks/%s/devices/%s' % (p_shardhost, p_nwid, p_device), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.put('https://%s/api/v1/networks/%s/devices/%s' % (p_shardhost, p_nwid, p_device), data=json.dumps({p_field: p_value, 'moveMapMarker': movevalue}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 16: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -352,7 +352,7 @@ def getorgdeviceinfo (p_apikey, p_shardhost, p_orgid, p_device):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/inventory' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/inventory' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 17: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -379,7 +379,7 @@ def getorginventory(p_apikey, p_shardhost, p_orgid):
 
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/inventory' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://%s/api/v1/organizations/%s/inventory' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 18: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -397,7 +397,7 @@ def clonecreateorg(p_apikey, p_shardhost, p_srcorgid, p_dstorgname):
     
     time.sleep(API_EXEC_DELAY)
     try:
-        r = requests.post('https://%s/api/v0/organizations/%s/clone' % (p_shardhost, p_srcorgid), data=json.dumps({'name': p_dstorgname}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.post('https://%s/api/v1/organizations/%s/clone' % (p_shardhost, p_srcorgid), data=json.dumps({'name': p_dstorgname}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 19: Unable to contact Meraki cloud')
         sys.exit(2)

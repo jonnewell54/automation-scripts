@@ -67,7 +67,7 @@ def getorgid(p_apikey, p_orgname):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.get('https://api.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         printusertext('ERROR 01: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -89,7 +89,7 @@ def getnwlist(p_apikey, p_shardhost, p_orgid):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_shardhost, p_orgid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         printusertext('ERROR 02: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -107,7 +107,7 @@ def getssids(p_apikey, p_shardhost, p_netid):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://%s/api/v0/networks/%s/ssids' % (p_shardhost, p_netid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://%s/api/v1/networks/%s/ssids' % (p_shardhost, p_netid), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         printusertext('ERROR 03: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -126,7 +126,7 @@ def setssidattribute(p_apikey, p_shardhost, p_netid, p_ssidnum, p_attribute, p_v
     merakirequestthrottler()
     
     try:
-        r = requests.put('https://%s/api/v0/networks/%s/ssids/%s' % (p_shardhost, p_netid, p_ssidnum), data=json.dumps({p_attribute: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.put('https://%s/api/v1/networks/%s/ssids/%s' % (p_shardhost, p_netid, p_ssidnum), data=json.dumps({p_attribute: p_value}), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         printusertext('ERROR 04: Unable to contact Meraki cloud')
         sys.exit(2)

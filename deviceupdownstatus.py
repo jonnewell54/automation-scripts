@@ -206,7 +206,7 @@ def getorgid(p_apikey, p_orgname):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
+        r = requests.get('https://api.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'})
     except:
         printusertext('ERROR 07: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -229,7 +229,7 @@ def getsnmpinfo(p_apikey, p_orgid):
         
     merakirequestthrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations/%s/snmp' % p_orgid, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.get('https://api.meraki.com/api/v1/organizations/%s/snmp' % p_orgid, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         printusertext('ERROR 08: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -259,7 +259,7 @@ def getinventory(p_apikey, p_shardhost, p_orgid):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations/%s/inventory' % p_orgid, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://api.meraki.com/api/v1/organizations/%s/inventory' % p_orgid, headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         printusertext('ERROR 09: Unable to contact Meraki cloud')
         sys.exit(2)
@@ -291,7 +291,7 @@ def getdevicename(p_apikey, p_shardhost, p_nwid, p_serial):
     
     merakirequestthrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/networks/%s/devices/%s' % (p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://api.meraki.com/api/v1/networks/%s/devices/%s' % (p_nwid, p_serial), headers={'X-Cisco-Meraki-API-Key': p_apikey, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         printusertext('ERROR 10: Unable to contact Meraki cloud')
         sys.exit(2)

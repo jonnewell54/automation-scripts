@@ -166,7 +166,7 @@ def getInventory(p_org):
     
     merakiRequestThrottler()
     if True:
-        r = requests.get('https://%s/api/v0/organizations/%s/inventory' % (p_org.shard, p_org.id), headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://%s/api/v1/organizations/%s/inventory' % (p_org.shard, p_org.id), headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     else:
         print('ERROR 00: Unable to contact Meraki cloud')
         return(None)
@@ -182,7 +182,7 @@ def getNetworks(p_org):
     
     merakiRequestThrottler()
     try:
-        r = requests.get('https://%s/api/v0/organizations/%s/networks' % (p_org.shard, p_org.id), headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://%s/api/v1/organizations/%s/networks' % (p_org.shard, p_org.id), headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         print('ERROR 01: Unable to contact Meraki cloud')
         return(None)
@@ -198,7 +198,7 @@ def getOrgs():
         
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
+        r = requests.get('https://api.meraki.com/api/v1/organizations', headers={'X-Cisco-Meraki-API-Key': ARG_APIKEY, 'Content-Type': 'application/json'}, timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT) )
     except:
         print('ERROR 02: Unable to contact Meraki cloud')
         return(None)
@@ -237,7 +237,7 @@ def getNetworkClients(p_org, p_net):
     
     returnValue = []    
     networkHasMoreClientPages = True        
-    requestUrl = 'https://%s/api/v0/networks/%s/clients?perPage=%s&timespan=%s' % (p_org.shard, p_net, NET_CLIENTS_PAGE_LENGTH, NET_CLIENT_LOOKUP_TIME_DAYS*SECONDS_IN_DAY)
+    requestUrl = 'https://%s/api/v1/networks/%s/clients?perPage=%s&timespan=%s' % (p_org.shard, p_net, NET_CLIENTS_PAGE_LENGTH, NET_CLIENT_LOOKUP_TIME_DAYS*SECONDS_IN_DAY)
     
     while networkHasMoreClientPages:
         merakiRequestThrottler()
@@ -272,7 +272,7 @@ def getNetworkClients(p_org, p_net):
 def executeActionBatch (p_org, p_portList, p_config):
     print('Executing action batch...')
         
-    requestUrl = 'https://%s/api/v0/organizations/%s/actionBatches' % (p_org.shard, p_org.id)
+    requestUrl = 'https://%s/api/v1/organizations/%s/actionBatches' % (p_org.shard, p_org.id)
     
     payload = {'confirmed':True, 'synchronous':False}
     

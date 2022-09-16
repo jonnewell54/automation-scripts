@@ -63,7 +63,7 @@ def getorglist(p_apikey):
     
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', 
+        r = requests.get('https://api.meraki.com/api/v1/organizations', 
             headers={'X-Cisco-Meraki-API-Key': p_apikey, 
             'Content-Type': 'application/json'},
             timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
@@ -86,7 +86,7 @@ def getorgid(p_apikey, p_orgname):
     
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations', 
+        r = requests.get('https://api.meraki.com/api/v1/organizations', 
             headers={'X-Cisco-Meraki-API-Key': p_apikey, 
             'Content-Type': 'application/json'},
             timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
@@ -110,7 +110,7 @@ def getorginventory(p_apikey, p_orgid):
 
     merakiRequestThrottler()
     try:
-        r = requests.get('https://api.meraki.com/api/v0/organizations/%s/inventory' % p_orgid, 
+        r = requests.get('https://api.meraki.com/api/v1/organizations/%s/inventory' % p_orgid, 
             headers={'X-Cisco-Meraki-API-Key': p_apikey, 
             'Content-Type': 'application/json'},
             timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))

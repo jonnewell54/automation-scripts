@@ -9,7 +9,7 @@ Run in Python 3
 Install requests library, via macOS terminal:
 pip3 install requests
 
-login.py has these two lines, with the API key from your Dashboard profile (upper-right email login > API access), and organization ID to call (https://dashboard.meraki.com/api/v0/organizations); separated into different file for security.
+login.py has these two lines, with the API key from your Dashboard profile (upper-right email login > API access), and organization ID to call (https://dashboard.meraki.com/api/v1/organizations); separated into different file for security.
 api_key = '[API_KEY]'
 org_id = '[ORG_ID]'
 
@@ -53,11 +53,11 @@ if __name__ == '__main__':
     session = requests.session()
     headers = {'X-Cisco-Meraki-API-Key': API_KEY, 'Content-Type': 'application/json'}
     try:
-        name = json.loads(session.get('https://api.meraki.com/api/v0/organizations/' + ORG_ID, headers=headers).text)['name']
+        name = json.loads(session.get('https://api.meraki.com/api/v1/organizations/' + ORG_ID, headers=headers).text)['name']
     except:
         sys.exit('Incorrect API key or org ID, as no valid data returned')
-    networks = json.loads(session.get('https://api.meraki.com/api/v0/organizations/' + ORG_ID + '/networks', headers=headers).text)
-    inventory = json.loads(session.get('https://api.meraki.com/api/v0/organizations/' + ORG_ID + '/inventory', headers=headers).text)
+    networks = json.loads(session.get('https://api.meraki.com/api/v1/organizations/' + ORG_ID + '/networks', headers=headers).text)
+    inventory = json.loads(session.get('https://api.meraki.com/api/v1/organizations/' + ORG_ID + '/inventory', headers=headers).text)
     appliances = [device for device in inventory if device['model'][:2] in ('MX', 'Z1', 'Z3', 'vM') and device['networkId'] is not None]
     devices = [device for device in inventory if device not in appliances and device['networkId'] is not None]
 
@@ -73,9 +73,9 @@ if __name__ == '__main__':
     for appliance in appliances:
         network_name = get_network_name(appliance['networkId'], networks)
         print('Looking into network ' + network_name)
-        device_name = json.loads(session.get('https://api.meraki.com/api/v0/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'], headers=headers).text)['name']
+        device_name = json.loads(session.get('https://api.meraki.com/api/v1/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'], headers=headers).text)['name']
         try:
-            perfscore = json.loads(session.get('https://api.meraki.com/api/v0/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'] + '/performance', headers=headers).text)['perfScore']
+            perfscore = json.loads(session.get('https://api.meraki.com/api/v1/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'] + '/performance', headers=headers).text)['perfScore']
         except:
             perfscore = None
         try:
@@ -86,7 +86,7 @@ if __name__ == '__main__':
         uplinks_info['WAN1'] = dict.fromkeys(['interface', 'status', 'ip', 'gateway', 'publicIp', 'dns', 'usingStaticIp'])
         uplinks_info['WAN2'] = dict.fromkeys(['interface', 'status', 'ip', 'gateway', 'publicIp', 'dns', 'usingStaticIp'])
         uplinks_info['Cellular'] = dict.fromkeys(['interface', 'status', 'ip', 'provider', 'publicIp', 'model', 'connectionType'])
-        uplinks = json.loads(session.get('https://api.meraki.com/api/v0/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'] + '/uplink', headers=headers).text)
+        uplinks = json.loads(session.get('https://api.meraki.com/api/v1/networks/' + appliance['networkId'] + '/devices/' + appliance['serial'] + '/uplink', headers=headers).text)
         for uplink in uplinks:
             if uplink['interface'] == 'WAN 1':
                 for key in uplink.keys():
@@ -114,13 +114,13 @@ if __name__ == '__main__':
     for device in devices:
         network_name = get_network_name(device['networkId'], networks)
         print('Looking into network ' + network_name)
-        device_name = json.loads(session.get('https://api.meraki.com/api/v0/networks/' + device['networkId'] + '/devices/' + device['serial'], headers=headers).text)['name']
+        device_name = json.loads(session.get('https://api.meraki.com/api/v1/networks/' + device['networkId'] + '/devices/' + device['serial'], headers=headers).text)['name']
         try:
             print('Found device ' + device_name)
         except:
             print('Found device ' + device['serial'])
         uplink_info = dict.fromkeys(['interface', 'status', 'ip', 'gateway', 'publicIp', 'dns', 'vlan', 'usingStaticIp'])
-        uplink = json.loads(session.get('https://api.meraki.com/api/v0/networks/' + device['networkId'] + '/devices/' + device['serial'] + '/uplink', headers=headers).text)
+        uplink = json.loads(session.get('https://api.meraki.com/api/v1/networks/' + device['networkId'] + '/devices/' + device['serial'] + '/uplink', headers=headers).text)
         
         # Blank uplink for devices that are down or meshed APs
         if uplink == []:
